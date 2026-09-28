@@ -27,12 +27,10 @@ def configure_logging() -> None:
 
 def read_line(prompt: str) -> str:
 
-    if sys.stdin.isatty():
-        try:
-            return input(prompt)
-        except EOFError:
-            return ""
-    return sys.stdin.readline().rstrip("\n")
+    try:
+        return input(prompt)
+    except EOFError:
+        return ""
 
 
 def main() -> None:
