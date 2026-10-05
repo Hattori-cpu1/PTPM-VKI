@@ -33,27 +33,49 @@ def read_line(prompt: str) -> str:
         return ""
 
 
+def process_one_triangle() -> bool:
+
+    raw_a = read_line("Введите сторону A (Enter — выход): ").strip()
+
+    if raw_a == "":
+        return False
+
+    raw_b = read_line("Введите сторону B: ").strip()
+    raw_c = read_line("Введите сторону C: ").strip()
+
+    logging.info(f"Запрос: A={raw_a!r}, B={raw_b!r}, C={raw_c!r}")
+
+    triangle_type, coordinates = solve(raw_a, raw_b, raw_c)
+
+    print(f"Тип треугольника: {triangle_type}")
+    print(f"Координаты вершин: {coordinates}")
+    print("-" * 40)
+
+    logging.info(
+        f"Успешный запрос. Результат: тип={triangle_type!r}, координаты={coordinates}"
+    )
+    return True
+
+
 def main() -> None:
     configure_logging()
     logging.info("Приложение запущено")
+    print("Введите стороны треугольника. Для выхода — пустая строка (просто Enter).")
+
     try:
-        raw_a = read_line("Сторона A: ")
-        raw_b = read_line("Сторона B: ")
-        raw_c = read_line("Сторона C: ")
+        while True:
+            try:
+                if not process_one_triangle():
+                    break
+            except  Exception as exc:
 
-        logging.info(f"Запрос: A={raw_a!r}, B={raw_b!r}, C={raw_c!r}")
+                logging.exception(f"Неуспешный запрос. Ошибка: {exc}")
+                print("Ошибка при обработке. Попробуйте снова.")
+                print("-" * 40)
+    except KeyboardInterrupt:
 
-        triangle_type, coordinates = solve(raw_a, raw_b, raw_c)
-
-        print(f"Тип треугольника: {triangle_type}")
-        print(f"Координаты вершин: {coordinates}")
-
-        logging.info(
-            f"Успешный запрос. Результат: тип={triangle_type!r}, координаты={coordinates}"
-        )
-    except Exception as exc:
-        logging.exception(f"Неуспешный запрос. Ошибка: {exc}")
-        raise
+        logging.info("Получен KeyboardInterrupt (Ctrl+C)")
+        print("\nВыход по Ctrl+C.")
     finally:
         logging.info("Приложение завершило работу")
 
