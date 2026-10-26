@@ -126,6 +126,11 @@ class TestTriangle(unittest.TestCase):
         _, c = solve("0.1", "0.1", "0.1")
         self._check_box(c)
 
+    def test_testing(self):
+        t, c = solve("0.1", "0.2", "0.3")
+        self.assertEqual(t, NOT_TRIANGLE)
+
+
 
 if __name__ == "__main__":
     unittest.main()
