@@ -1,0 +1,17 @@
+.coverage
+
+venv/
+ENV/
+env/
+
+
+**/__pycache__/
+*.рус
+*.pyo
+*.pyd
+
+.DS_Store
+Thumbs.db
+
+.idea/
+logs/
